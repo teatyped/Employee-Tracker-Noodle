@@ -1,3 +1,6 @@
+use employees;
+
+
 INSERT INTO departments(name)
 VALUES
     ('HR'),
@@ -8,16 +11,16 @@ VALUES
 
 INSERT INTO roles(title, salary, department_id)
 VALUES
-    ('Manager', 150000, 1),
+    ('HR Manager', 150000, 1),
     ('Representative', 50000, 1),
-    ('Manager', 150000, 2),
+    ('Sales Manager', 150000, 2),
     ('Representative', 50000, 2),
-    ('Manager', 150000, 3),
+    ('Engineer Manager', 150000, 3),
     ('Engineer', 80000, 3),
     ('Intern', 30000, 3),
-    ('Manager', 150000, 4),
+    ('Finances Manager', 150000, 4),
     ('Accountant', 70000, 4),
-    ('Manager', 150000, 5), 
+    ('Production Manager', 150000, 5), 
     ('Factory Worker', 45000, 5),
     ('Representative', 50000, 5);
 
