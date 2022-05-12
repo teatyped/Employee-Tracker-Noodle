@@ -3,31 +3,29 @@ use employees;
 
 INSERT INTO departments(name)
 VALUES
-    ('HR'),
-    ('Sales'),
+    ('Customer Service'),
     ('Engineering'),
-    ('Finances'),
-    ('Production');
+    ('Marketing'),
+    ('Finance');
 
 INSERT INTO roles(title, salary, department_id)
-VALUES
-    ('HR Manager', 150000, 1),
-    ('Representative', 50000, 1),
-    ('Sales Manager', 150000, 2),
-    ('Representative', 50000, 2),
-    ('Engineer Manager', 150000, 3),
-    ('Engineer', 80000, 3),
-    ('Intern', 30000, 3),
-    ('Finances Manager', 150000, 4),
+VALUES 
+    ('Customer Service Rep', 40000, 1),
+    ('Software Developer', 110000, 2),
+    ('Marketer', 90000, 3),
     ('Accountant', 70000, 4),
-    ('Production Manager', 150000, 5), 
-    ('Factory Worker', 45000, 5),
-    ('Representative', 50000, 5);
+    ('Customer Manager', 75000, 1),
+    ('Developer Manager', 90000, 2),
+    ('Marketing Manager', 100000, 3),
+    ('Accounting Manager', 120000, 4);
 
 INSERT INTO employees(first_name, last_name, role_id, manager_id)
 VALUES
-    ('Anitta', 'Gonzalez', 1, NULL),
-    ('Geronimo', 'Perez', 3, 1),
-    ('John', 'Smith', 4, 2),
-    ('John', 'Joe', 1, 3),
-    ('Christian', 'Gomez', 1, 4);
+    ('Bethany', 'Christian', 5, NULL),
+    ('Chandler', 'Acevedo', 6, NULL),
+    ('Bob', 'Smith', 7, NULL),
+    ('Sally', 'Fields', 8, NULL),
+    ('Mariella', 'Lewis', 1, 5),
+    ('Lola', 'Morris', 2, 6),
+    ('Shelly', 'Dixon', 3, 7),
+    ('Yasir', 'Sargent', 4, 8);
