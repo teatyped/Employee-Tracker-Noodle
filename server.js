@@ -165,51 +165,40 @@ function getDepartment() {
 }
 
 function addRole() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "title",
-        message: "Enter a role",
-      },
-      {
-        type: "input",
-        name: "salary",
-        message: "Enter salary amount for the role",
-      },
-      {
-        type: "list",
-        name: "department",
-        message: "Select which Department the role is in",
-        choices: ["Customer Service", "Engineering", "Marketing", "Finance"],
-      },
-    ])
-    .then(function (res) {
-        var depId ='';
-        if (res.department === "Customer Service"){
-            depId = 1;
-        }
-        if (res.department === "Engineering"){
-            depId = 2;
-        }
-        if (res.department === "Marketing"){
-            depId = 3;
-        }
-        if (res.department === "Finance"){
-            depId = 4;
-        }
-
-      var query = connection.query(
-        "INSERT INTO role SET ? ? ? ",
-        [res.title, res.salary, res.department, 1], // not working
-        function (err) {
-          if (err) throw err;
-          console.table(res);
-          init();
-        }
-      );
-    });
-}
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          name: "title",
+          message: "Enter a role",
+        },
+        {
+          type: "input",
+          name: "salary",
+          message: "Enter salary amount for the role",
+        },
+        {
+          type: "list",
+          name: "department",
+          message: "Select which Department the role is in",
+          choices: ["Customer Service", "Engineering", "Marketing", "Finance"],
+        },
+      ])
+      .then((answer) => {
+        connection.query('SELECT id FROM department WHERE ? ', {name: answer.department}, (err, idRes) =>{
+            if (err) throw err;
+            const [{id}] = idRes
+            connection.query('INSERT INTO role SET ?', {
+                title: answer.title,
+                salary: answer.salary,
+                department_id: id,
+            })
+            console.table(answer);
+            console.log('You added a role successfully');
+            init();
+        })
+    })
+  }
 
 function addEmployee() {
   // add another employee with: first_name, last_name, manager_id
