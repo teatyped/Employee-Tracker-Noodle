@@ -91,20 +91,28 @@ function addDepartment() {
         {
           name: "name",
           type: "input",
-          message: "What Department would you like to add?"
+          message: "What Department would you like to add?",
+          validate: (departInput) => {
+            if (departInput) {
+              return true;
+            } else {
+              console.log("Please provide a department name");
+              return false;
+            }
+          }
         }
     ]).then(function(res) {
         var query = connection.query(
             "INSERT INTO department SET ? ",
             {
               name: res.name
-            
             },
             function(err) {
                 if (err) throw err
                 console.table(res);
+                console.log(`Success! ${res.name} added!`);
                 init();
             }
         )
     })
-}
+  }
