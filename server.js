@@ -1,5 +1,6 @@
-const express = require('express');
 const db = require('./db');
+const connection = require('./db/connection');
+const inquirer = require('inquirer')
 
 
 init();
@@ -24,7 +25,6 @@ function init() {
         ],
       },
     ])
-
     .then(function (startAnswer) {
       switch (startAnswer.options) {
         case "View all departments":
@@ -38,7 +38,7 @@ function init() {
             viewAllEmployees();
           break;
         case "Add a department":
-         
+           addDepartment();
           break;
         case "Add a role":
          
@@ -83,4 +83,28 @@ function viewAllEmployees() {
     db.findEmployees().then(([data]) => {
         console.table(data)
     }).then(() => init())
+}
+
+
+function addDepartment() {
+    inquirer.prompt([
+        {
+          name: "name",
+          type: "input",
+          message: "What Department would you like to add?"
+        }
+    ]).then(function(res) {
+        var query = connection.query(
+            "INSERT INTO department SET ? ",
+            {
+              name: res.name
+            
+            },
+            function(err) {
+                if (err) throw err
+                console.table(res);
+                init();
+            }
+        )
+    })
 }
