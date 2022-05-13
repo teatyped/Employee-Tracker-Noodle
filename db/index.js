@@ -8,6 +8,7 @@ class Data {
   findDepartments() {
     return this.connection.promise().query("SELECT * FROM department;");
   }
+  
 
   findRoles() {
     // Table with: role id, job title, department name, and salary
@@ -19,10 +20,6 @@ class Data {
   }
 
   findEmployees() {
-    // employee data: employee ids, first, last, job titles, department name, salaries, and managers full name that employees report to (look into CONCAT() mysql)
-    //employee table: employee.id, employee.first_name, employee.last_name
-    // role table: role.title, role.salary,
-    // add managers name in query
     return this.connection
       .promise()
       .query(
