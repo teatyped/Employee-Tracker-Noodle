@@ -43,31 +43,20 @@ function init() {
           addRole();
           break;
         case "Add an employee":
+            addEmployee();
           break;
         case "Update an employee":
+            updateEmployee();
           break;
         default:
           process.exit();
       }
-
-      //VIEW ALL DEPARTMENTS
-      // Make a table with a list of deparments and id's: Customer Service, Developers, Marketing, Sales
-
-      //VIEW ALL ROLES
-      // Table with: role id, job title, department name, and salary
-
-      //VIEW ALL EMPLOYEES
-      //Table with employee data: employee ids, first, last, job titles, departments, salaries, and managers that employees report to
-
-      //ADD A DEPARTMENT
-      //enter name of department; add to the database
     });
 }
 
 // function to handle each case
 //-----Todo:-------
 // add an employee
-// add role
 // update employee role
 
 function viewAllDepartments() {
@@ -127,43 +116,7 @@ function addDepartment() {
     });
 }
 
-// db.query(query, function (err, res) {
-//     // if there is an error, throw it
-//     if (err) {
-//         throw err;
-//     }
-//     // returns the response to the console.table function and .map will return an array of objects based on the data in the query
-//     const departments = res.map(departments => {
-//         return {
-//             // SQL departments constructor (dep_name)
-//             name: departments.dep_name,
-//             value: departments.id
-//         }
-//     });
-//     // displays the departments to the user as a table
-//     console.table(res);
-//     // displays to the user the available departments to add.
-//     console.log('Departments Available\n');
-//     // runs the promptAdd function below
-//     promptAddNewRole(departments);
-// });
-
-function getDepartment() {
-  const query = "SELECT * FROM department";
-  connection.query(query, function (err, res) {
-    if (err) {
-      throw err;
-    }
-    const departmentInfo = res.map((department) => {
-      return {
-        department_name: department.name,
-        department_id: department.id,
-      };
-    });
-    return departmentInfo;
-  });
-}
-
+// added new role into role table and output new table to user
 function addRole() {
     inquirer
       .prompt([
@@ -200,10 +153,80 @@ function addRole() {
     })
   }
 
-function addEmployee() {
+//support functions for add employee
+var roleArr = [];
+function selectRole() {
+    connection.query("SELECT * FROM role", function (err, res) {
+      if (err) throw err;
+      for (var i = 0; i < res.length; i++) {
+        roleArr.push(res[i].title);
+      }
+    });
+    return roleArr;
+  }
+
+  var managersArr = [];
+ function selectManager() {
+    connection.query(
+      "SELECT first_name, last_name FROM employee WHERE manager_id IS NULL",
+      function (err, res) {
+        if (err) throw err;
+        for (var i = 0; i < res.length; i++) {
+          managersArr.push(res[i].first_name);
+        }
+      }
+    );
+    return managersArr;
+  }
+
   // add another employee with: first_name, last_name, manager_id
   // show employee was added to database
-}
+function addEmployee() {
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'firstName',
+          message: "Please enter employee's first name",
+        },
+        {
+          type: 'input',
+          name: 'lastName',
+          message: "Please enter employee's last name",
+        },
+        {
+          type: 'list',
+          name: 'role',
+          message: 'What is their role?',
+          choices: selectRole()
+        },
+        {
+          type: 'list',
+          name: 'manager',
+          message: 'Who is the manager',
+          choices: selectManager()
+        },
+      ])
+      .then(function (res) {
+        var roleId = selectRole().indexOf(res.role) + 1
+        var managerId = selectManager().indexOf(res.choice) + 1
+        console.log(managerId);
+        var query = connection.query(
+          'INSERT INTO employee SET ? ',
+          {
+            first_name: res.firstName,
+            last_name: res.lastName,
+            role_id: roleId,
+            manager_id: managerId,
+          },
+          function (err) {
+            if (err) throw err;
+            console.table(res);
+            init();
+          }
+        );
+      });
+  }
 
 function updateEmployee() {
   // update selected employees new role.
