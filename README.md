@@ -34,8 +34,10 @@ Content management systems (CMS), Used to manage a company's employee database, 
 
 ## How to install 
 - run "npm install" in terminal to download the dependencies in order to run application
+- Make an .env file on the root level of Employee Tracker folder and enter you mysql user name and password.
+- IF no database, within mysql shell run source "db/schema.sql" then "db/seeds.sql" and then exit and start application 
 
-## How to test locally
+## How to test with in terminal 
 - run "npm start" ( to start the server and application )
 
 
