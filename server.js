@@ -235,45 +235,46 @@ function addEmployee() {
 }
 
 //support functions for update employee
-function getEmployeeList() {}
 
 function updateEmployee() {
   // update selected employees new role.
-connection.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;", function (err,res) { 
-    console.log(res); // testing 
-  inquirer
-    .prompt([
-      {
-        name: "lastName",
-        type: "list",
-        choices: 
-        function (){
-            var lastName = []
-            for ( let i = 0; i < res.length; i++){
+  connection.query(
+    "SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;",
+    function (err, res) {
+      console.log(res); // testing
+      inquirer
+        .prompt([
+          {
+            name: "lastName",
+            type: "list",
+            choices: function () {
+              var lastName = [];
+              for (let i = 0; i < res.length; i++) {
                 lastName.push(res[i].last_name);
-
+              }
+              return lastName;
+            },
+            message: "What is the Employee's last name? ",
+          },
+          {
+            name: "role",
+            type: "list",
+            message: "What is the Employees new title? ",
+            choices: selectRole(),
+          },
+        ])
+        .then(function (res) {
+          var roleId = selectRole().indexOf(res.role) + 1;
+          connection.query(
+            "UPDATE employee SET role_id = ? WHERE last_name = ?",
+            [roleId, res.lastName],
+            function (err) {
+              if (err) throw err;
+              console.table(res);
+              init();
             }
-            return lastName;
-        },
-        message: "What is the Employee's last name? ",
-      },
-      {
-        name: "role",
-        type: "list",
-        message: "What is the Employees new title? ",
-        choices: selectRole(),
-      },
-    ])
-    .then(function (res) {
-      var roleId = selectRole().indexOf(res.role) + 1;
-      connection.query(
-        "UPDATE employee SET role_id = ? WHERE last_name = ?", [roleId, res.lastName],
-        function (err) {
-          if (err) throw err;
-          console.table(res);
-          init();
-        }
-      );
-    });
-}) // connection 
+          );
+        });
+    }
+  ); // connection
 }
