@@ -19,7 +19,7 @@ Content management systems (CMS), Used to manage a company's employee database, 
 
 
 ## Scope of project
-- Scope is of the project is to use node.js and mysql in conjunction 
+- Scope is of the project is to use node.js and mysql in conjunction to track employees info
 
 
 ## Tools used
