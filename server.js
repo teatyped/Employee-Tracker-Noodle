@@ -2,8 +2,6 @@ const db = require("./db");
 const connection = require("./db/connection");
 const inquirer = require("inquirer");
 
-console.table(selectManager());
-
 init();
 
 function init() {
@@ -241,7 +239,6 @@ function updateEmployee() {
   connection.query(
     "SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;",
     function (err, res) {
-      console.log(res); // testing
       inquirer
         .prompt([
           {
