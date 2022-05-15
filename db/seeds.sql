@@ -22,7 +22,7 @@ VALUES
     ('Chandler', 'Acevedo', 6, NULL),
     ('Bob', 'Smith', 7, NULL),
     ('Sally', 'Fields', 8, NULL),
-    ('Mariella', 'Lewis', 1, 1),
+    ('Mariella', 'Fields', 1, 1),
     ('Lola', 'Morris', 2, 2),
     ('Shelly', 'Dixon', 3, 3),
     ('Yasir', 'Sargent', 4, 4);
