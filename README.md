@@ -17,6 +17,10 @@ Content management systems (CMS), Used to manage a company's employee database, 
 ### video 
 
 
+https://user-images.githubusercontent.com/96491122/168473922-0f049c70-9987-4151-9bcc-053c91785f9a.mp4
+
+
+
 
 ## Scope of project
 - Scope is of the project is to use node.js and mysql in conjunction to track employees info
